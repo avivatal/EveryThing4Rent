@@ -27,11 +27,7 @@ namespace WindowsFormsApp1
             car.Hide();
             pets.Hide();
             RealEstate.Hide();
-            checkedListBox1.Hide();
-
-
             
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -45,8 +41,7 @@ namespace WindowsFormsApp1
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-
+        {     
 
             OleDbCommand cmd = new OleDbCommand();
             con.Open();
@@ -99,10 +94,10 @@ namespace WindowsFormsApp1
             OleDbDataReader reader1 = request.ExecuteReader();
             while (reader1.HasRows && total > 0)
             {
-                checkedListBox1.Visible = true;
                 total--;
                 reader1.Read();
-                checkedListBox1.Items.Add(reader1.GetValue(1));
+                groupBox3.Show();
+                checkedListBox1.Items.Add(reader1.GetValue(3).ToString());
             }
 
 
@@ -159,6 +154,7 @@ namespace WindowsFormsApp1
 
         private void linkLabel6_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            groupBox3.Hide();
             linkLabel6.Visible = false;
             linkLabel2.Visible = false;
             linkLabel3.Visible = false;
