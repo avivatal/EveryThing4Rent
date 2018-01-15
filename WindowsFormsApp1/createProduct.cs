@@ -37,8 +37,6 @@ namespace WindowsFormsApp1
             if (comboBox1.SelectedItem.Equals("רכב"))
             {
                 groupBox1.Location = groupBox4.Location;
-               // groupBox1.Visible = !(groupBox2.Visible = false);
-                //groupBox1.Focus();
                 groupBox5.Hide();
                 groupBox4.Hide();
                 groupBox1.Show();
@@ -48,8 +46,6 @@ namespace WindowsFormsApp1
             else if (comboBox1.SelectedItem.Equals("נדלן"))
             {
                 groupBox2.Location = groupBox4.Location;
-                //groupBox1.Visible = !(groupBox2.Visible = false);
-                //groupBox2.Focus();
                 groupBox5.Hide();
                 groupBox4.Hide();
                 groupBox2.Show();
@@ -422,6 +418,13 @@ namespace WindowsFormsApp1
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            AddEquipment add = new AddEquipment();
+            add.ShowDialog();
         }
     }
 }

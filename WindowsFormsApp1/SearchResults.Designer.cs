@@ -54,6 +54,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "הגש בקשה להחלפה";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -64,6 +65,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "הגש בקשה להשאלה";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
@@ -103,6 +105,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(704, 150);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_1);
             // 
             // error
             // 

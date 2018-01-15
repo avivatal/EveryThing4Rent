@@ -19,6 +19,7 @@ namespace WindowsFormsApp1
         string type="";
         public Form1()
         {
+        
             InitializeComponent();
             correntUser = new User();
 
@@ -26,6 +27,11 @@ namespace WindowsFormsApp1
             car.Hide();
             pets.Hide();
             RealEstate.Hide();
+            checkedListBox1.Hide();
+
+
+            
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -40,9 +46,11 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+
             OleDbCommand cmd = new OleDbCommand();
             con.Open();
-            cmd.CommandText = "SELECT * FROM RegisteredUser WHERE ID=@ID AND password=@password";// + textBox1.Text + "')";
+            cmd.CommandText = "SELECT * FROM RegisteredUser WHERE ID=@ID AND password=@password";
             cmd.Parameters.AddWithValue("@ID", textBox1.Text);
             cmd.Parameters.AddWithValue("@password", textBox2.Text);
             cmd.Connection = con;
@@ -74,6 +82,30 @@ namespace WindowsFormsApp1
                 reader.Close();
 
             }
+            con.Close();
+
+
+            //show Requests
+            con.Open();
+            OleDbCommand request = new OleDbCommand("SELECT * FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'", con);
+            request.ExecuteNonQuery();
+
+            ///checkedListBox1.Items.Add(read.GetValue(1));
+            OleDbCommand cmd1 = new OleDbCommand();
+            cmd1.CommandText = "SELECT COUNT(*) FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'";
+            cmd1.Connection = con;
+            cmd1.ExecuteNonQuery();
+            int total = (Int32)cmd1.ExecuteScalar();
+            OleDbDataReader reader1 = request.ExecuteReader();
+            while (reader1.HasRows && total > 0)
+            {
+                checkedListBox1.Visible = true;
+                total--;
+                reader1.Read();
+                checkedListBox1.Items.Add(reader1.GetValue(1));
+            }
+
+
             con.Close();
         }
 
@@ -220,11 +252,11 @@ namespace WindowsFormsApp1
             {
                 ///FUNCTION THAT CHECK TIMES
             }
-            if(!((valid1&&(check1>DateTime.Now))&& (valid2 && (check2 > DateTime.Now))&&(check1<check2)))
+            /*if(!((valid1&&(check1>=DateTime.Now))&& (valid2 && (check2 >= DateTime.Now))&&(check1<check2)))
             {
                 ///check today... cant change query beacuse times in calender
                 MessageBox.Show("error in the dates");
-            }
+            }*/
             else
             {
                 if (type.Equals("Pets"))

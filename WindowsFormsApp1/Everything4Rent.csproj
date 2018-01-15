@@ -45,10 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddEquipment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEquipment.Designer.cs">
+      <DependentUpon>AddEquipment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calander.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="Pets.cs" />
+    <Compile Include="ProductDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductDetails.Designer.cs">
+      <DependentUpon>ProductDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="RealEstate.cs" />
+    <Compile Include="RequestForRent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RequestForRent.Designer.cs">
+      <DependentUpon>RequestForRent.cs</DependentUpon>
+    </Compile>
     <Compile Include="SearchResults.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +115,12 @@
     <Compile Include="showProduct.Designer.cs">
       <DependentUpon>showProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="TradeIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TradeIn.Designer.cs">
+      <DependentUpon>TradeIn.cs</DependentUpon>
+    </Compile>
     <Compile Include="updateProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +129,9 @@
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="Vehicle.cs" />
+    <EmbeddedResource Include="AddEquipment.resx">
+      <DependentUpon>AddEquipment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="createProduct.resx">
       <DependentUpon>createProduct.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductDetails.resx">
+      <DependentUpon>ProductDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -126,11 +156,17 @@
     <EmbeddedResource Include="Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RequestForRent.resx">
+      <DependentUpon>RequestForRent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SearchResults.resx">
       <DependentUpon>SearchResults.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="showProduct.resx">
       <DependentUpon>showProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TradeIn.resx">
+      <DependentUpon>TradeIn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="updateProduct.resx">
       <DependentUpon>updateProduct.cs</DependentUpon>

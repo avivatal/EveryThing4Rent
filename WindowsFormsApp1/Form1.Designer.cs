@@ -97,6 +97,9 @@
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.linkLabel5 = new System.Windows.Forms.LinkLabel();
             this.linkLabel6 = new System.Windows.Forms.LinkLabel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.label26 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.car.SuspendLayout();
             this.pets.SuspendLayout();
@@ -104,6 +107,7 @@
             this.secondhand.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -887,6 +891,36 @@
             this.linkLabel6.Visible = false;
             this.linkLabel6.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel6_LinkClicked);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox3.Controls.Add(this.checkedListBox1);
+            this.groupBox3.Controls.Add(this.label26);
+            this.groupBox3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.groupBox3.Location = new System.Drawing.Point(521, 203);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(191, 185);
+            this.groupBox3.TabIndex = 16;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Visible = false;
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Location = new System.Drawing.Point(19, 49);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(120, 88);
+            this.checkedListBox1.TabIndex = 8;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(18, 17);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(163, 19);
+            this.label26.TabIndex = 7;
+            this.label26.Text = "בקשות חדשות להחלפה";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -895,6 +929,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(717, 410);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.linkLabel6);
             this.Controls.Add(this.linkLabel5);
             this.Controls.Add(this.linkLabel4);
@@ -922,6 +957,8 @@
             this.groupBox2.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -996,6 +1033,9 @@
         private System.Windows.Forms.TextBox textBox15;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Label label26;
     }
 }
 

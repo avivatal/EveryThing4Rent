@@ -14,6 +14,7 @@ namespace WindowsFormsApp1
     public partial class SearchResults : Form
     {
         string query;
+        DataGridViewRow selectedRow;
         public void setQuery(string q)
         {
             query = q;
@@ -38,10 +39,10 @@ namespace WindowsFormsApp1
             // here you can have column reference by using e.ColumnIndex
             //    DataGridViewImageCell cell = (DataGridViewImageCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
-            if (e.RowIndex == 1)
-            {
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-            }
+                if (e.ColumnIndex == 1)
+                {
+                    //Write code
+                }
             
             // ... do something ...
         }
@@ -63,13 +64,13 @@ namespace WindowsFormsApp1
                 dataGridView1.DataSource = ds;
 
                 
-
                 DataGridViewCheckBoxColumn selectcolunm = new DataGridViewCheckBoxColumn();
                 selectcolunm.Name = "Select Product";
+
                 DataGridViewLinkColumn seeProduct = new DataGridViewLinkColumn();
                 seeProduct.Text = "More Deatils";
                 seeProduct.UseColumnTextForLinkValue = true;
-               // seeProduct.LinkBehavior.
+
                 dataGridView1.RowHeadersVisible = false;
                 dataGridView1.Columns.Insert(0, selectcolunm);
                 dataGridView1.Columns.Insert(1, seeProduct);
@@ -77,11 +78,10 @@ namespace WindowsFormsApp1
                 dataGridView1.Columns.Remove("cancelPolicy");
                 dataGridView1.Columns.Remove("avgScore");
                 dataGridView1.Columns.Remove("viewCount");
-                dataGridView1.Columns.Remove("productID");
+            //    dataGridView1.Columns.Remove("productID");
                 dataGridView1.Columns.Remove("isOnlyPartOfPackage");
 
                 Settings.con.Close();
-
                 dataGridView1.Height = dataGridView1.Rows.Count * 40;
             }
             else
@@ -111,6 +111,65 @@ namespace WindowsFormsApp1
             catch (System.Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dataGridView1.Rows)
+            {
+                DataGridViewCheckBoxCell cell = row.Cells[0] as DataGridViewCheckBoxCell;
+                if (cell.Value!=null&&(bool)cell.Value)
+                {
+                    selectedRow = row;
+                    break;
+                }
+             }
+            if (selectedRow.Cells[8].FormattedValue.ToString().ToLower() == "TRUE".ToLower())
+            {
+                if (Settings.user != null)
+                {
+                    TradeIn tradein = new TradeIn(selectedRow);
+                    tradein.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("רק משתמשים מחוברים יכולים לבצע החלפה");
+                }
+            }
+            else
+            {
+                MessageBox.Show("לא ניתן לבצע החלפה עם המוצר הנבחר");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                DataGridViewCheckBoxCell cell = row.Cells[0] as DataGridViewCheckBoxCell;
+                if (cell.Value != null && (bool)cell.Value)// cell.TrueValue)
+                {
+                    selectedRow = row;
+                    break;
+                }
+            }
+            if (Settings.user != null)
+            {
+                RequestForRent requestForRent = new RequestForRent();
+                requestForRent.setProductids(selectedRow);
+                requestForRent.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("רק משתמשים מחוברים יכולים לבצע השכרה");
             }
 
         }
