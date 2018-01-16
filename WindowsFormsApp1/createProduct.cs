@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using Microsoft.VisualBasic;
 
 
 namespace WindowsFormsApp1
@@ -20,9 +21,11 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             groupBox1.Hide();
+            groupBox6.Hide();
             groupBox1.Hide();
             groupBox3.Hide();
             groupBox4.Hide();
+
 
         }
 
@@ -200,7 +203,7 @@ namespace WindowsFormsApp1
                         {
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
-                            cmd.CommandText = "INSERT INTO Vehicle ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[type],[model],[manufacture],[yearOfManufacture],[isAutomatic])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + carType.SelectedItem.ToString() + "','" + carModel.Text + "','" + carManu.Text + "','" + double.Parse(carYear.Text) + "','" + isAutomatic.Checked.ToString() + "')";
+                            cmd.CommandText = "INSERT INTO Vehicle ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[type],[model],[manufacture],[yearOfManufacture],[isAutomatic],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + carType.SelectedItem.ToString() + "','" + carModel.Text + "','" + carManu.Text + "','" + double.Parse(carYear.Text) + "','" + isAutomatic.Checked.ToString() + "','" + numericUpDown1.Value  + "')";
                             cmd.Connection = con;
                             cmd.ExecuteNonQuery();
 
@@ -215,7 +218,7 @@ namespace WindowsFormsApp1
                         {
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
-                            cmd.CommandText = "INSERT INTO RealEstate ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[type],[capacity])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + realestateType.SelectedItem.ToString() + "','" + int.Parse(textBox11.Text) + "')";
+                            cmd.CommandText = "INSERT INTO RealEstate ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[type],[capacity],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + realestateType.SelectedItem.ToString() + "','" + int.Parse(textBox11.Text) + "','" + numericUpDown1.Value + "')";
                             cmd.Connection = con;
                             cmd.ExecuteNonQuery();
 
@@ -230,7 +233,7 @@ namespace WindowsFormsApp1
                         {
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
-                            cmd.CommandText = "INSERT INTO SecondHandProduct ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[subCategory],[condition])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + secondHandType.SelectedItem.ToString() + "','" + condition.SelectedItem.ToString() + "')";
+                            cmd.CommandText = "INSERT INTO SecondHandProduct ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[subCategory],[condition],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + secondHandType.SelectedItem.ToString() + "','" + condition.SelectedItem.ToString() + "','"+numericUpDown1.Value +  "')";
                             cmd.Connection = con;
                             cmd.ExecuteNonQuery();
 
@@ -246,7 +249,7 @@ namespace WindowsFormsApp1
                         {
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
-                            cmd.CommandText = "INSERT INTO Pets ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[animalType],[gender],[age],[breed])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + animalType.SelectedItem.ToString() + "','" + gender.SelectedItem.ToString() + "','" + int.Parse(textBox15.Text) + "','" + textBox16.Text + "')";
+                            cmd.CommandText = "INSERT INTO Pets ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[animalType],[gender],[age],[breed],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + animalType.SelectedItem.ToString() + "','" + gender.SelectedItem.ToString() + "','" + int.Parse(textBox15.Text) + "','" + textBox16.Text + "','" + numericUpDown1.Value  +"')";
                             cmd.Connection = con;
                             cmd.ExecuteNonQuery();
 
@@ -261,7 +264,7 @@ namespace WindowsFormsApp1
                         {
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
-                            cmd.CommandText = "INSERT INTO Package ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "')";
+                            cmd.CommandText = "INSERT INTO Package ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + numericUpDown1.Value  +"')";
                             cmd.Connection = con;
                             cmd.ExecuteNonQuery();
 
@@ -397,7 +400,15 @@ namespace WindowsFormsApp1
 
         private void aproval_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (aproval.SelectedItem.Equals("שמרנית"))
+                {
+                groupBox6.Show();
+                groupBox6.Focus();
+             
+            }
+            else
+                groupBox6.Hide();
+               
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -425,6 +436,16 @@ namespace WindowsFormsApp1
 
             AddEquipment add = new AddEquipment();
             add.ShowDialog();
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

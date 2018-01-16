@@ -65,7 +65,7 @@ namespace WindowsFormsApp1
                 string status = "";
                 if (reader1.Read() && reader1.GetValue(0) != DBNull.Value) { 
                 //get approvalApproach
-                OleDbCommand cmd2 = new OleDbCommand("SELECT approvalApproach FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + Settings.user.getID() + "' AND ProductID='" + productID + "'", con);
+                OleDbCommand cmd2 = new OleDbCommand("SELECT approvalApproach FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + selectedProduct.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + productID + "'", con);
                // con.Open();
                 cmd2.ExecuteNonQuery();
                 OleDbDataReader reader2 = cmd2.ExecuteReader();
@@ -76,13 +76,34 @@ namespace WindowsFormsApp1
                 {
                     status = "approved";
                 }
-                else if (reader2.GetValue(0).Equals("הבטוחה"))
+                else if (reader2.GetValue(0).Equals("בטוחה"))
                 {
                     status = "pending";
                 }
-                else if (reader2.GetValue(0).Equals("השמרנית"))
+                else if (reader2.GetValue(0).Equals("שמרנית"))
                 {
-                    status = "approved"; /////////צריך להיות מאושר ע"פ סף אמינות כלשהו
+                        OleDbCommand cmd5 = new OleDbCommand("SELECT avgScore FROM RegisteredUser WHERE ID=@ID", con);
+                        cmd5.Parameters.AddWithValue("@ID", Settings.user.getID());
+                        
+                        cmd5.ExecuteNonQuery();
+                        OleDbDataReader reader5 = cmd5.ExecuteReader();
+                        reader5.Read();
+                        double avgscore = double.Parse(reader5.GetValue(0).ToString());
+
+                        OleDbCommand cmd6 = new OleDbCommand("SELECT rankCons FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + selectedProduct.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + productID + "'", con);
+                        cmd6.ExecuteNonQuery();
+                        OleDbDataReader reader6 = cmd6.ExecuteReader();
+                        reader6.Read();
+                        double rankCons = double.Parse(reader6.GetValue(0).ToString());
+
+                        if(avgscore >= rankCons)
+                        {
+                            status = "approved";
+                        }
+                        else
+                        {
+                            status = "denied";
+                        }
                 }
 
                 }

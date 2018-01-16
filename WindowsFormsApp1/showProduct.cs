@@ -48,11 +48,16 @@ namespace WindowsFormsApp1
                 "\nAverage Score: " + reader.GetValue(9).ToString() +
                 "\nNumber Of Views: " + reader.GetValue(10).ToString() +
                 "\nCan Be Traded: " + reader.GetValue(11).ToString();
+
+                
             }
             if (type.Equals("RealEstate"))
             {
                  message += "\nEstate Type: " + reader.GetValue(12).ToString()
                     + "\nCapacity: " + reader.GetValue(13).ToString();
+
+                if (reader.GetValue(4).ToString().Equals("שמרנית"))
+                    message += "\nMinimal approval rating: " + reader.GetValue(14).ToString();
             }
             else if (type.Equals("Vehicle"))
             {
@@ -63,6 +68,9 @@ namespace WindowsFormsApp1
                     "\nYear: " + reader.GetValue(15).ToString() +
                     "\nIs Automatic: " + reader.GetValue(16).ToString();
 
+                if (reader.GetValue(4).ToString().Equals("שמרנית"))
+                    message += "\nMinimal approval rating: " + reader.GetValue(17).ToString();
+
             }
             else if (type.Equals("Pets"))
             {
@@ -70,11 +78,17 @@ namespace WindowsFormsApp1
                     "\nGender: " + reader.GetValue(13).ToString() +
                     "\nAge: " + reader.GetValue(14).ToString() +
                     "\nBreed: " + reader.GetValue(15).ToString();
+
+                if (reader.GetValue(4).ToString().Equals("שמרנית"))
+                    message += "\nMinimal approval rating: " + reader.GetValue(16).ToString();
             }
             else if (type.Equals("SecondHandProduct"))
             {
                 message += "\nSubcategory: " + reader.GetValue(12).ToString() +
                     "\nCondition: " + reader.GetValue(13).ToString();
+
+                if (reader.GetValue(4).ToString().Equals("שמרנית"))
+                    message += "\nMinimal approval rating: " + reader.GetValue(14).ToString();
             }
              else if (type.Equals("Package"))
              {
@@ -90,6 +104,9 @@ namespace WindowsFormsApp1
                 {
                     message += "\nProduct ID: " + reader1.GetValue(2).ToString();
                 }
+
+                if (reader.GetValue(4).ToString().Equals("שמרנית"))
+                    message += "\nMinimal approval rating: " + reader.GetValue(12).ToString();
             }
             DialogResult ddd = MessageBox.Show(message, "צפה", MessageBoxButtons.OK);
           /*  PictureBox p = new PictureBox();
