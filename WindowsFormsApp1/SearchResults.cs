@@ -122,11 +122,13 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach(DataGridViewRow row in dataGridView1.Rows)
+            String owenerId = "";
+            foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCheckBoxCell cell = row.Cells[0] as DataGridViewCheckBoxCell;
                 if (cell.Value!=null&&(bool)cell.Value)
                 {
+                    owenerId = row.Cells[3].FormattedValue.ToString();
                     selectedRow = row;
                     break;
                 }
@@ -135,8 +137,14 @@ namespace WindowsFormsApp1
             {
                 if (Settings.user != null)
                 {
-                    TradeIn tradein = new TradeIn(selectedRow);
-                    tradein.ShowDialog();
+                    if (!Settings.user.getID().Equals(owenerId))
+                    {
+                        TradeIn tradein = new TradeIn(selectedRow);
+                        tradein.ShowDialog();
+                    }
+                    else {
+                        MessageBox.Show("אינך יכול להחליף עם מוצר זה- מוצר זה בבעלותך");
+                    }
                 }
                 else
                 {
@@ -151,21 +159,31 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            String owenerId = "";
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCheckBoxCell cell = row.Cells[0] as DataGridViewCheckBoxCell;
                 if (cell.Value != null && (bool)cell.Value)// cell.TrueValue)
                 {
+                    owenerId=row.Cells[3].FormattedValue.ToString();
                     selectedRow = row;
+
                     break;
                 }
             }
+           
             if (Settings.user != null)
             {
-                RequestForRent requestForRent = new RequestForRent();
-                requestForRent.setProductids(selectedRow);
-                requestForRent.ShowDialog();
+                if (!Settings.user.getID().Equals(owenerId))
+                {
+                    RequestForRent requestForRent = new RequestForRent();
+                    requestForRent.setProductids(selectedRow);
+                    requestForRent.ShowDialog();
+                }
+
+                else {
+                    MessageBox.Show("אינך יכול לשכור מוצר שבבעלותך");
+                }
             }
             else
             {

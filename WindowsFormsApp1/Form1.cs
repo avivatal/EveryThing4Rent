@@ -253,8 +253,8 @@ namespace WindowsFormsApp1
                 ///check today... cant change query beacuse times in calender
                 MessageBox.Show("error in the dates");
             }*/
-            else
-            {
+           // else
+          //  {
                 if (type.Equals("Pets"))
                 {
                     if (animalType.SelectedIndex != -1)
@@ -303,7 +303,7 @@ namespace WindowsFormsApp1
                     r.setQuery(myQuery);
                     r.ShowDialog();
                 }
-            }
+            //}
         }
     }
 }

@@ -86,16 +86,17 @@ namespace WindowsFormsApp1
                 }
 
                 }
+                string lessorID = selectedProduct.Cells[3].FormattedValue.ToString();
                 //add to DB
                 OleDbCommand cmd3 = new OleDbCommand();
                // con.Open();
-                cmd3.CommandText = "INSERT INTO RentalRequests ([LessorID],[ProductID],[StartDate],[EndDate],[Status])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+"')";
+                cmd3.CommandText = "INSERT INTO RentalRequests ([LesseID],[ProductID],[StartDate],[EndDate],[Status],[LessorID])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+ "','"+ lessorID+"')";
                 cmd3.Connection = con;
                 cmd3.ExecuteNonQuery();
               //  con.Close();
 
                 //get lessor email
-                string lessorID = selectedProduct.Cells[3].FormattedValue.ToString(); ///////check index
+                lessorID = selectedProduct.Cells[3].FormattedValue.ToString(); ///////check index
                 string email = "";
                 OleDbCommand cmd4 = new OleDbCommand("SELECT email FROM RegisteredUser WHERE ID='" + lessorID + "'", con);
                // con.Open();
