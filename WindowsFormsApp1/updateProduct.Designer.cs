@@ -225,6 +225,7 @@
             this.nimTime.Name = "nimTime";
             this.nimTime.Size = new System.Drawing.Size(26, 20);
             this.nimTime.TabIndex = 37;
+            this.nimTime.TextChanged += new System.EventHandler(this.nimTime_TextChanged);
             // 
             // label4
             // 

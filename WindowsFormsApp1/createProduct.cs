@@ -175,7 +175,7 @@ namespace WindowsFormsApp1
 
             if (cost.Text == "" || nimTime.Text == "" || nimTimeCheck.SelectedIndex == -1 || aproval.SelectedIndex == -1 || cancel.Text == "" || pictureBox1.ImageLocation== null || deposit.Text == "")
             {
-                MessageBox.Show("קיימים פרטים חסרים, אנא מלא את כלל השדות");
+                MessageBox.Show("קיימים פרטים חסרים, אנא מלא את כלל השדות, במידה ואין פקדון למוצר הזן 0 בתיבה המתאימה");
             }
             else
             {
@@ -189,6 +189,23 @@ namespace WindowsFormsApp1
                     {
                         MessageBox.Show("לא ניתן להזין פיקדון עבור עלות מוצר שגדולה מ0");
                     }
+                    
+                    else if (!int.TryParse(nimTime.Text, out int i)||i<0)
+                    {
+                        MessageBox.Show("אנא הזן כמות זמן השכרה מינימאלי במספרים ");
+                    }
+                    else if (!int.TryParse(deposit.Text, out int g) || g< 0)
+                    {
+                        MessageBox.Show("אנא הזן פקדון מוצר במספרים ");
+                    }
+                    else if (!int.TryParse(cost.Text, out  g) || g < 0)
+                    {
+                        MessageBox.Show("אנא הזן עלות מוצר במספרים ");
+                    }
+                    else if (!int.TryParse(cancel.Text, out  g) || g < 0)
+                    {
+                        MessageBox.Show("אנא הזן זמן לביטול במספרים ");
+                    }
                     else
                     {
                         OleDbCommand cmdCounter = new OleDbCommand("SELECT ProductsCounter FROM RegisteredUser WHERE ID='" + Settings.user.getID() + "'", con);
@@ -201,6 +218,11 @@ namespace WindowsFormsApp1
                         String tableName = "";
                         if (comboBox1.SelectedItem.Equals("רכב"))
                         {
+                             if (!int.TryParse(carYear.Text, out g) || carYear.Text.Length!=4)
+                            {
+                                MessageBox.Show("אנא הזן שנת ייצור הרכב באופן תקין (4 ספרות) ");
+                            }
+
                             tableName = "Vehicle";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
@@ -217,6 +239,10 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("נדלן"))
                         {
+                            if (!int.TryParse(textBox11.Text, out g) || g<0)
+                            {
+                                MessageBox.Show("אנא הזן כמות אנשים בנכס במספרים ");
+                            }
                             tableName = "RealEstate";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
@@ -233,6 +259,7 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("מוצרי יד שנייה"))
                         {
+
                             tableName = "SecondHandProduct";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
@@ -250,6 +277,10 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("חיות מחמד"))
                         {
+                            if (!int.TryParse(textBox15.Text, out g) || g < 0)
+                            {
+                                MessageBox.Show("אנא הזן גיל תקין לחיית המחמד בבקשה ");
+                            }
                             tableName = "Pets";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
@@ -431,6 +462,11 @@ namespace WindowsFormsApp1
 
         private void nimTime_TextChanged(object sender, EventArgs e)
         {
+            String temp = nimTime.Text;
+            int i =0;
+            //if(!int.TryParse(nimTime.Text, out i))
+               
+
 
         }
 

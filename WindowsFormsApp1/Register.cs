@@ -58,12 +58,28 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("you have to enter all the details");
             }
+            else if (!int.TryParse(textBox1.Text, out int g) || textBox1.Text.Length != 9)
+            {
+                MessageBox.Show("אנא הזן ת.ז תקין ");
+            }
+            else if (!int.TryParse(textBox4.Text, out g) || textBox4.Text.Length != 10)
+            {
+                MessageBox.Show("אנא הזן מספר טלפון תקין ");
+            }
+            else if (textBox5.Text.IndexOf('@') == -1)
+            {
+                MessageBox.Show("אנא הזן כתובת מייל תקינה ");
+            }
+            else if(!validEmail(textBox5.Text))
+            {
+                MessageBox.Show("אנא הזן כתובת מייל תקינה ");
+            }
             else
             {
                 //insert
                 OleDbCommand cmd = new OleDbCommand();
                 con.Open();
-                cmd.CommandText = "INSERT INTO RegisteredUser ([ID],[firstName],[surName],[phoneNumber],[email],[password],[image],[dateOfBirth],[payPalAcount],[isDangerous],[authorazation],[avgScore],[isReligous],[isBusinessClient],[isBroker],[ProductsCounter])VALUES('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" + textBox4.Text + "','" + textBox5.Text + "','" + textBox7.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + dateTimePicker1.Value.Date + "','" + textBox6.Text + "','false','user','" + 0 + "','" + checkBox1.Checked.ToString() + "','false','false','"+0+"')";
+                cmd.CommandText = "INSERT INTO RegisteredUser ([ID],[firstName],[surName],[phoneNumber],[email],[password],[image],[dateOfBirth],[payPalAcount],[isDangerous],[authorazation],[avgScore],[isReligous],[isBusinessClient],[isBroker],[ProductsCounter])VALUES('" + textBox1.Text + "','" + textBox2.Text + "','" + textBox3.Text + "','" + textBox4.Text + "','" + textBox5.Text + "','" + textBox7.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + dateTimePicker1.Value.Date + "','" + textBox6.Text + "','false','user','" + 0 + "','" + checkBox1.Checked.ToString() + "','false','false','" + 0 + "')";
                 cmd.Connection = con;
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("SUCCESED");
@@ -71,22 +87,26 @@ namespace WindowsFormsApp1
 
 
                 //send mail
-                var messageEmail = new MailMessage();
-                messageEmail.To.Add(new MailAddress(textBox5.Text));
-                messageEmail.From = new MailAddress("everything4rentnotonlyplace@gmail.com");
-                messageEmail.Subject = "Confirmation";
-                messageEmail.Body = "you register successfully";
-                messageEmail.IsBodyHtml = false;
-                using (var smtp = new SmtpClient())
+                try
                 {
-                    smtp.Credentials = new NetworkCredential("everything4rentnotonlyplace", "Y12n3t4a");
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
-                    smtp.Send(messageEmail);
-                }
+                    var messageEmail = new MailMessage();
+                    messageEmail.To.Add(new MailAddress(textBox5.Text));
+                    messageEmail.From = new MailAddress("everything4rentnotonlyplace@gmail.com");
+                    messageEmail.Subject = "Confirmation";
+                    messageEmail.Body = "you register successfully";
+                    messageEmail.IsBodyHtml = false;
+                    using (var smtp = new SmtpClient())
+                    {
+                        smtp.Credentials = new NetworkCredential("everything4rentnotonlyplace", "Y12n3t4a");
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Port = 587;
+                        smtp.EnableSsl = true;
+                        smtp.Send(messageEmail);
+                    }
 
-                this.Close();
+                    this.Close();
+                }
+                catch { }
             }
           }
 
@@ -119,7 +139,18 @@ namespace WindowsFormsApp1
         {
 
         }
-
+        private Boolean validEmail (string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
 

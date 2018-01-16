@@ -50,48 +50,52 @@ namespace WindowsFormsApp1
         {
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
-
-            OleDbCommand show = new OleDbCommand(query, Settings.con);
-            Settings.con.Open();
-            show.ExecuteNonQuery();
-            DataTable ds = new DataTable();
-            OleDbDataAdapter adapter = new OleDbDataAdapter(show);
-            adapter.Fill(ds);
-            if (ds.Rows.Count > 0)
+            try//TODDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             {
-                dataGridView1.Show();
-                error.Hide();
-                dataGridView1.DataSource = ds;
+                OleDbCommand show = new OleDbCommand(query, Settings.con);
+                Settings.con.Open();
+                show.ExecuteNonQuery();
+                DataTable ds = new DataTable();
+                OleDbDataAdapter adapter = new OleDbDataAdapter(show);
+                adapter.Fill(ds);
+                if (ds.Rows.Count > 0)
+                {
+                    dataGridView1.Show();
+                    error.Hide();
+                    dataGridView1.DataSource = ds;
 
-                
-                DataGridViewCheckBoxColumn selectcolunm = new DataGridViewCheckBoxColumn();
-                selectcolunm.Name = "Select Product";
 
-                DataGridViewLinkColumn seeProduct = new DataGridViewLinkColumn();
-                seeProduct.Text = "More Deatils";
-                seeProduct.UseColumnTextForLinkValue = true;
+                    DataGridViewCheckBoxColumn selectcolunm = new DataGridViewCheckBoxColumn();
+                    selectcolunm.Name = "Select Product";
 
-                dataGridView1.RowHeadersVisible = false;
-                dataGridView1.Columns.Insert(0, selectcolunm);
-                dataGridView1.Columns.Insert(1, seeProduct);
-                dataGridView1.Columns.Remove("image");
-                dataGridView1.Columns.Remove("cancelPolicy");
-                dataGridView1.Columns.Remove("avgScore");
-                dataGridView1.Columns.Remove("viewCount");
-            //    dataGridView1.Columns.Remove("productID");
-                dataGridView1.Columns.Remove("isOnlyPartOfPackage");
+                    DataGridViewLinkColumn seeProduct = new DataGridViewLinkColumn();
+                    seeProduct.Text = "More Deatils";
+                    seeProduct.UseColumnTextForLinkValue = true;
 
-                Settings.con.Close();
-                dataGridView1.Height = dataGridView1.Rows.Count * 40;
+                    dataGridView1.RowHeadersVisible = false;
+                    dataGridView1.Columns.Insert(0, selectcolunm);
+                    dataGridView1.Columns.Insert(1, seeProduct);
+                    dataGridView1.Columns.Remove("image");
+                    dataGridView1.Columns.Remove("cancelPolicy");
+                    dataGridView1.Columns.Remove("avgScore");
+                    dataGridView1.Columns.Remove("viewCount");
+                    //    dataGridView1.Columns.Remove("productID");
+                    dataGridView1.Columns.Remove("isOnlyPartOfPackage");
+
+                    Settings.con.Close();
+                    dataGridView1.Height = dataGridView1.Rows.Count * 40;
+                }
+                else
+                {
+                    dataGridView1.Hide();
+                    error.Location = dataGridView1.Location;
+                    error.Text = "Couldnt find products with this filters";
+                    error.Show();
+                    Settings.con.Close();
+
+                }
             }
-            else
-            {
-                dataGridView1.Hide();
-                error.Location = dataGridView1.Location;
-                error.Text = "Couldnt find products with this filters";
-                error.Show();
-                Settings.con.Close();
-
+            catch {
             }
 
         }

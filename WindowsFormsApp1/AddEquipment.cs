@@ -40,16 +40,18 @@ namespace WindowsFormsApp1
 
 
             //add record to DB
-            cmd = new OleDbCommand("INSERT INTO Equipment ([RealEstate_ID],[Lessor_id],[Equipment],[Quantity])VALUES('" + productID + "','" + Settings.user.getID() + "','" + comboBox1.SelectedItem + "','" + numericUpDown1.Value + "');",con);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
+            if (comboBox1.SelectedItem!= null&& !comboBox1.SelectedItem.Equals(""))
+            {
+                cmd = new OleDbCommand("INSERT INTO Equipment ([RealEstate_ID],[Lessor_id],[Equipment],[Quantity])VALUES('" + productID + "','" + Settings.user.getID() + "','" + comboBox1.SelectedItem + "','" + numericUpDown1.Value + "');", con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
 
-            //add item to listbox
-            listboxItems.Add(comboBox1.SelectedItem + ", " + numericUpDown1.Value);
-            listBox1.DataSource = null;
-            listBox1.DataSource = listboxItems;
-
+                //add item to listbox
+                listboxItems.Add(comboBox1.SelectedItem + ", " + numericUpDown1.Value);
+                listBox1.DataSource = null;
+                listBox1.DataSource = listboxItems;
+            }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,34 +78,43 @@ namespace WindowsFormsApp1
         {
             int selectedIndex = listBox1.SelectedIndex;
             string item = "";
-            
+
             // Remove the item in the listbox
+
             try
             {
-                item = listboxItems.ElementAt(selectedIndex);
-                listboxItems.RemoveAt(selectedIndex);
-            }
-            catch
-            {
-            }
-            listBox1.DataSource = null;
-            listBox1.DataSource = listboxItems;
+                if (selectedIndex == -1)
+                    {
+                        MessageBox.Show("אנא בחר מוצר להסרה");
+                    }
+                    else
+                    {
+                        item = listboxItems.ElementAt(selectedIndex);
+                        listboxItems.RemoveAt(selectedIndex);
 
-            //remove from DB
-            cmd = new OleDbCommand("DELETE FROM Equipment WHERE RealEstate_ID=@productID AND Lessor_id=@lessorID AND Equipment=@equipment AND Quantity=@quantity", con);
-            cmd.Parameters.AddWithValue("@productID", productID.ToString());
-            cmd.Parameters.AddWithValue("@lessorID", Settings.user.getID());
-            cmd.Parameters.AddWithValue("@equipment", item.Substring(0, item.IndexOf(',')));
-            cmd.Parameters.AddWithValue("@quantity", (item.Substring(item.IndexOf(',') + 2).ToString()));
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
+
+                        listBox1.DataSource = null;
+                        listBox1.DataSource = listboxItems;
+
+                        //remove from DB
+                        cmd = new OleDbCommand("DELETE FROM Equipment WHERE RealEstate_ID=@productID AND Lessor_id=@lessorID AND Equipment=@equipment AND Quantity=@quantity", con);
+                        cmd.Parameters.AddWithValue("@productID", productID.ToString());
+                        cmd.Parameters.AddWithValue("@lessorID", Settings.user.getID());
+                        cmd.Parameters.AddWithValue("@equipment", item.Substring(0, item.IndexOf(',')));
+                        cmd.Parameters.AddWithValue("@quantity", (item.Substring(item.IndexOf(',') + 2).ToString()));
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+        }
+        catch{
+        }
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -118,7 +129,7 @@ namespace WindowsFormsApp1
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }
