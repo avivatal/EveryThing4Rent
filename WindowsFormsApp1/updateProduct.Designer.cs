@@ -91,6 +91,7 @@
             this.label31 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -369,6 +370,7 @@
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.CausesValidation = false;
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.realestateType);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.textBox11);
@@ -376,7 +378,7 @@
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Location = new System.Drawing.Point(190, 490);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(208, 110);
+            this.groupBox2.Size = new System.Drawing.Size(208, 139);
             this.groupBox2.TabIndex = 63;
             this.groupBox2.TabStop = false;
             this.groupBox2.Visible = false;
@@ -801,6 +803,16 @@
             this.comboBox4.TabIndex = 68;
             this.comboBox4.Text = "בחר";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(56, 103);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(82, 23);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "הוסף ציוד";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // updateProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -917,5 +929,6 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -97,7 +97,7 @@ namespace WindowsFormsApp1
                 total--;
                 reader1.Read();
                 groupBox3.Show();
-                checkedListBox1.Items.Add(reader1.GetValue(3).ToString());
+                checkedListBox1.Items.Add(reader1.GetValue(2).ToString() + " "+reader1.GetValue(3).ToString()+" בקשה מ");
             }
 
 
@@ -246,13 +246,32 @@ namespace WindowsFormsApp1
             }
             if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
             {
-                ///FUNCTION THAT CHECK TIMES
+                double counterOfMinHoures = 0;
+                if (nimTimeCheck.SelectedItem.ToString().Equals("שעה"))
+                {
+                    counterOfMinHoures += double.Parse(nimTime.Text);
+                }
+                if (nimTimeCheck.SelectedItem.ToString().Equals("יום"))
+                {
+                    counterOfMinHoures += (double.Parse(nimTime.Text) * 24);
+                }
+                if (nimTimeCheck.SelectedItem.ToString().Equals("חודש"))
+                {
+                    counterOfMinHoures += ((double.Parse(nimTime.Text) * 24) * 30);
+                }
+                if (nimTimeCheck.SelectedItem.ToString().Equals("שנה"))
+                {
+                    counterOfMinHoures += (((double.Parse(nimTime.Text) * 24) * 30) * 365);
+                }
+                myQuery += "AND minimalRentTime>='" + counterOfMinHoures + "'";
             }
-            /*if(!((valid1&&(check1>=DateTime.Now))&& (valid2 && (check2 >= DateTime.Now))&&(check1<check2)))
+
+
+            if(!(check1<check2))
             {
                 ///check today... cant change query beacuse times in calender
                 MessageBox.Show("error in the dates");
-            }*/
+            }
             else
             {
                 if (type.Equals("Pets"))
@@ -283,9 +302,17 @@ namespace WindowsFormsApp1
                         myQuery += "and manufacture=" + carManu.Text + "";
                     if (carYear.Text != "")
                         myQuery += "and yearOfManufacture='" + carYear.Text + "'";
-               /*     if(isAutomatic.Checked)
-                        myQuery += "and isAutomatic='true'";
-                    else myQuery += "and isAutomatic='false'";*/
+                    if (isAutomatic.SelectedIndex != -1)
+                    {
+                        if (isAutomatic.SelectedItem.ToString().Equals("כן"))
+                        {
+                            myQuery += "and isAutomatic='true'";
+                        }
+                        else
+                        {
+                            myQuery += "and isAutomatic='false'";
+                        }
+                    }
 
                 }
                 else if (type.Equals("RealEstate"))

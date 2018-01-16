@@ -63,39 +63,60 @@ namespace WindowsFormsApp1
 
 
                 string status = "";
-                if (reader1.Read() && reader1.GetValue(0) != DBNull.Value) { 
-                //get approvalApproach
-                OleDbCommand cmd2 = new OleDbCommand("SELECT approvalApproach FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + Settings.user.getID() + "' AND ProductID='" + productID + "'", con);
-               // con.Open();
-                cmd2.ExecuteNonQuery();
+                if (reader1.Read() && reader1.GetValue(0) != DBNull.Value) {
+                    //get approvalApproach
+                    OleDbCommand cmd2 = new OleDbCommand("SELECT approvalApproach FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + selectedProduct.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + productID + "'", con);               // con.Open();
+                    cmd2.ExecuteNonQuery();
                 OleDbDataReader reader2 = cmd2.ExecuteReader();
                 reader2.Read();
-               // con.Close();
                  
                 if(reader2.GetValue(0).Equals("כל הקודם זוכה"))
                 {
                     status = "approved";
                 }
-                else if (reader2.GetValue(0).Equals("הבטוחה"))
+                else if (reader2.GetValue(0).Equals("בטוחה"))
                 {
                     status = "pending";
                 }
-                else if (reader2.GetValue(0).Equals("השמרנית"))
+                else if (reader2.GetValue(0).Equals("שמרנית"))
                 {
                     status = "approved"; /////////צריך להיות מאושר ע"פ סף אמינות כלשהו
-                }
+                        OleDbCommand cmd5 = new OleDbCommand("SELECT avgScore FROM RegisteredUser WHERE ID=@ID", con);
+                        cmd5.Parameters.AddWithValue("@ID", Settings.user.getID());
+                        
+                        cmd5.ExecuteNonQuery();
+                        OleDbDataReader reader5 = cmd5.ExecuteReader();
+                        reader5.Read();
+                        double avgscore = double.Parse(reader5.GetValue(0).ToString());
+                        
+                        OleDbCommand cmd6 = new OleDbCommand("SELECT rankCons FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + selectedProduct.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + productID + "'", con);
+                        cmd6.ExecuteNonQuery();
+                        OleDbDataReader reader6 = cmd6.ExecuteReader();
+                        reader6.Read();
+                        double rankCons = double.Parse(reader6.GetValue(0).ToString());
+                        
+                       if (avgscore >= rankCons)
+                       {
+                           status = "approved";
+                       }
+                        else
+                         {
+                            status = "denied";
+                                                  }
+                    }
 
                 }
+                string lessorID = selectedProduct.Cells[3].FormattedValue.ToString();
                 //add to DB
                 OleDbCommand cmd3 = new OleDbCommand();
-               // con.Open();
-                cmd3.CommandText = "INSERT INTO RentalRequests ([LessorID],[ProductID],[StartDate],[EndDate],[Status])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+"')";
+                // con.Open();
+                cmd3.CommandText = "INSERT INTO RentalRequests ([LesseID],[ProductID],[StartDate],[EndDate],[Status],[LessorID])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date + "','" + status + "','" + lessorID + "')";
                 cmd3.Connection = con;
                 cmd3.ExecuteNonQuery();
-              //  con.Close();
+                //  con.Close();
 
                 //get lessor email
-                string lessorID = selectedProduct.Cells[3].FormattedValue.ToString(); ///////check index
+                lessorID = selectedProduct.Cells[3].FormattedValue.ToString(); ///////check index
                 string email = "";
                 OleDbCommand cmd4 = new OleDbCommand("SELECT email FROM RegisteredUser WHERE ID='" + lessorID + "'", con);
                // con.Open();

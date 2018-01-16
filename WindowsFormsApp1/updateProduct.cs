@@ -246,7 +246,7 @@ namespace WindowsFormsApp1
         private void button3_Click(object sender, EventArgs e)
         {
             string type = null;
-            if (double.Parse(cost.Text) > 0 && double.Parse(deposit.Text) > 0)
+            if (cost.Text!=""&&deposit.Text!=""&&double.Parse(cost.Text) > 0 && double.Parse(deposit.Text) > 0)
             {
                 MessageBox.Show("לא ניתן להזין פיקדון עבור עלות מוצר שגדולה מ0");
             }
@@ -428,9 +428,26 @@ namespace WindowsFormsApp1
                 }
                 if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
                 {
+                    double counterOfMinHoures = 0;
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("שעה"))
+                    {
+                        counterOfMinHoures += double.Parse(nimTime.Text);
+                    }
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("יום"))
+                    {
+                        counterOfMinHoures += (double.Parse(nimTime.Text) * 24);
+                    }
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("חודש"))
+                    {
+                        counterOfMinHoures += ((double.Parse(nimTime.Text) * 24) * 30);
+                    }
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("שנה"))
+                    {
+                        counterOfMinHoures += (((double.Parse(nimTime.Text) * 24) * 30) * 365);
+                    }
                     OleDbCommand cmd1 = new OleDbCommand();
                     con.Open();
-                    cmd1.CommandText = "UPDATE " + type + " SET minimalRentTime = '" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.CommandText = "UPDATE " + type + " SET minimalRentTime = '" + counterOfMinHoures+ "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
                     cmd1.Connection = con;
                     cmd1.ExecuteNonQuery();
                     con.Close();
@@ -499,6 +516,12 @@ namespace WindowsFormsApp1
         private void label28_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddEquipment add = new AddEquipment();
+            add.ShowDialog();
         }
     }
 }
