@@ -198,9 +198,10 @@ namespace WindowsFormsApp1
                         reader1.Read();
                         int counter = int.Parse(reader1.GetValue(0).ToString());
                         con.Close();
-
+                        String tableName = "";
                         if (comboBox1.SelectedItem.Equals("רכב"))
                         {
+                            tableName = "Vehicle";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
                             cmd.CommandText = "INSERT INTO Vehicle ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[type],[model],[manufacture],[yearOfManufacture],[isAutomatic],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + carType.SelectedItem.ToString() + "','" + carModel.Text + "','" + carManu.Text + "','" + double.Parse(carYear.Text) + "','" + isAutomatic.Checked.ToString() + "','" + numericUpDown1.Value  + "')";
@@ -216,6 +217,7 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("נדלן"))
                         {
+                            tableName = "RealEstate";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
                             cmd.CommandText = "INSERT INTO RealEstate ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[type],[capacity],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + realestateType.SelectedItem.ToString() + "','" + int.Parse(textBox11.Text) + "','" + numericUpDown1.Value + "')";
@@ -231,6 +233,7 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("מוצרי יד שנייה"))
                         {
+                            tableName = "SecondHandProduct";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
                             cmd.CommandText = "INSERT INTO SecondHandProduct ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[subCategory],[condition],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + secondHandType.SelectedItem.ToString() + "','" + condition.SelectedItem.ToString() + "','"+numericUpDown1.Value +  "')";
@@ -247,6 +250,7 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("חיות מחמד"))
                         {
+                            tableName = "Pets";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
                             cmd.CommandText = "INSERT INTO Pets ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[animalType],[gender],[age],[breed],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + animalType.SelectedItem.ToString() + "','" + gender.SelectedItem.ToString() + "','" + int.Parse(textBox15.Text) + "','" + textBox16.Text + "','" + numericUpDown1.Value  +"')";
@@ -262,6 +266,7 @@ namespace WindowsFormsApp1
                         }
                         else if (comboBox1.SelectedItem.Equals("חבילה"))
                         {
+                            tableName="Package";
                             OleDbCommand cmd = new OleDbCommand();
                             con.Open();
                             cmd.CommandText = "INSERT INTO Package ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[rankCons])VALUES('" + counter + "','" + Settings.user.getID() + "','" + int.Parse(cost.Text) + "','" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "','" + aproval.SelectedItem.ToString() + "','" + isPackage.Checked.ToString() + "','" + cancel.Text + "','" + pictureBox1.ImageLocation.ToString() + "','" + int.Parse(deposit.Text) + "','" + 0 + "','" + 0 + "','" + isTraded.Checked.ToString() + "','" + numericUpDown1.Value  +"')";
@@ -287,6 +292,13 @@ namespace WindowsFormsApp1
                             con.Close();
                             this.Close();
                         }
+                  
+                        OleDbCommand cmd8 = new OleDbCommand();
+                        con.Open();
+                        cmd8.CommandText = "INSERT INTO ProductTypes ([LessorID],[ProductID],[Type])VALUES('" + Settings.user.getID() + "','" + counter + "','" + tableName + "')";
+                        cmd8.Connection = con;
+                        cmd8.ExecuteNonQuery();
+                        con.Close();
 
 
                         OleDbCommand cmd1 = new OleDbCommand();
