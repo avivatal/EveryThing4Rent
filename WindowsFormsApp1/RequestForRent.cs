@@ -79,7 +79,7 @@ namespace WindowsFormsApp1
                 {
                     status = "pending";
                 }
-                else if (reader2.GetValue(0).Equals("השמרנית"))
+                else if (reader2.GetValue(0).Equals("שמרנית"))
                 {
                     status = "approved"; /////////צריך להיות מאושר ע"פ סף אמינות כלשהו
                 }
@@ -89,7 +89,7 @@ namespace WindowsFormsApp1
                 //add to DB
                 OleDbCommand cmd3 = new OleDbCommand();
                // con.Open();
-                cmd3.CommandText = "INSERT INTO RentalRequests ([LessorID],[ProductID],[StartDate],[EndDate],[Status])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+"')";
+                cmd3.CommandText = "INSERT INTO RentalRequests ([LesseID],[ProductID],[StartDate],[EndDate],[Status],[LessorID])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+ "','" +selectedProduct.Cells[3].FormattedValue.ToString()+"')";
                 cmd3.Connection = con;
                 cmd3.ExecuteNonQuery();
                 //  con.Close();

@@ -143,7 +143,6 @@ namespace WindowsFormsApp1
                 if (selectedReader.Read() && selectedReader.GetValue(0) != DBNull.Value)
                 {
                     OleDbCommand createRequest;
-                    MessageBox.Show("סבבה");
                     if (cost > 0)
                     {
                          createRequest = new OleDbCommand("INSERT INTO tradeRequest ([productID],[MyproductID],[requestedByID],[lessorID],[tradeStartDate],[tradeEndDate],[status],[submitRequestDate],[additionalPaymentRequestor],[additionalPaymentReceiver])VALUES("+double.Parse(tradewith.Cells[2].FormattedValue.ToString())+"," + productId + ",'" + Settings.user.getID() + "','" + tradewith.Cells[3].FormattedValue.ToString() + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date + "','wait','" + DateTime.Now.Date + "'," + cost + "," + 0 + ")", con);

@@ -42,7 +42,7 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != null && textBox1.Text.Equals("") && textBox2.Text == null && !textBox2.Text.Equals(""))
+            if (textBox1.Text != null && !textBox1.Text.Equals("") && textBox2.Text != null && !textBox2.Text.Equals(""))
             {
                 OleDbCommand cmd = new OleDbCommand();
                 con.Open();
@@ -77,32 +77,33 @@ namespace WindowsFormsApp1
                     Settings.user.myProducts = new List<Product>();
                     reader.Close();
 
+                    OleDbCommand request = new OleDbCommand("SELECT * FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'", con);
+                    request.ExecuteNonQuery();
+
+                    ///checkedListBox1.Items.Add(read.GetValue(1));
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    cmd1.CommandText = "SELECT COUNT(*) FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    int total = (Int32)cmd1.ExecuteScalar();
+                    OleDbDataReader reader1 = request.ExecuteReader();
+                    while (reader1.HasRows && total > 0)
+                    {
+                        total--;
+                        reader1.Read();
+                        groupBox3.Show();
+                        checkedListBox1.Items.Add(reader1.GetValue(2).ToString() + " " + reader1.GetValue(3).ToString() + " בקשה מ");
+                    }
+
+                    
+
                 }
                 con.Close();
 
 
                 //show Requests
-                con.Open();
-                OleDbCommand request = new OleDbCommand("SELECT * FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'", con);
-                request.ExecuteNonQuery();
-
-            ///checkedListBox1.Items.Add(read.GetValue(1));
-            OleDbCommand cmd1 = new OleDbCommand();
-            cmd1.CommandText = "SELECT COUNT(*) FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'";
-            cmd1.Connection = con;
-            cmd1.ExecuteNonQuery();
-            int total = (Int32)cmd1.ExecuteScalar();
-            OleDbDataReader reader1 = request.ExecuteReader();
-            while (reader1.HasRows && total > 0)
-            {
-                total--;
-                reader1.Read();
-                groupBox3.Show();
-                checkedListBox1.Items.Add(reader1.GetValue(2).ToString() + " "+reader1.GetValue(3).ToString()+" בקשה מ");
-            }
-
-
-                con.Close();
+               // con.Open();
+            
             }
             else {
                 MessageBox.Show("אנא הזן פרטי התחברות או פנה להרשמה");
@@ -241,6 +242,7 @@ namespace WindowsFormsApp1
             bool valid1 = DateTime.TryParse(dateTimePicker1.Text, out check1);
             bool valid2 = DateTime.TryParse(dateTimePicker2.Text, out check2);
             double d = 0, f = 0;
+
             string myQuery = "select * from " + type + " where ";
             if ((!textBox3.Text.Equals("")&& !textBox3.Text.Equals(""))&&(!double.TryParse(textBox3.Text, out  d)|| d<0|| !double.TryParse(textBox4.Text, out  f) || f < 0||f<d))
             {
@@ -250,37 +252,7 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show("אנא הזן מחירים תקינים");
             }
-    
-            else if (textBox3.Text != "" && textBox4.Text != "")
-            {
-                myQuery += "rentalCost between " + double.Parse(textBox3.Text) + " and " + double.Parse(textBox4.Text) + "";
-            }
-            else if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
-            {
-                double counterOfMinHoures = 0;
-                if (nimTimeCheck.SelectedItem.ToString().Equals("שעה"))
-                {
-                    counterOfMinHoures += double.Parse(nimTime.Text);
-                }
-                if (nimTimeCheck.SelectedItem.ToString().Equals("יום"))
-                {
-                    counterOfMinHoures += (double.Parse(nimTime.Text) * 24);
-                }
-                if (nimTimeCheck.SelectedItem.ToString().Equals("חודש"))
-                {
-                    counterOfMinHoures += ((double.Parse(nimTime.Text) * 24) * 30);
-                }
-                if (nimTimeCheck.SelectedItem.ToString().Equals("שנה"))
-                {
-                    counterOfMinHoures += (((double.Parse(nimTime.Text) * 24) * 30) * 365);
-                }
-                myQuery += "AND minimalRentTime>='" + counterOfMinHoures + "'";
-            }
-
-
-            //if(!(check1<check2))
-                ///FUNCTION THAT CHECK TIMES
-            //}
+            
             else if(!((valid1&&(check1.Date>=DateTime.Now.Date))&& (valid2 && (check2 >= DateTime.Now.Date))&&(check1<=check2)))
             {
                 ///check today... cant change query beacuse times in calender
@@ -304,6 +276,31 @@ namespace WindowsFormsApp1
             }
             else
             {
+                if (textBox3.Text != "" && textBox4.Text != "")
+                {
+                    myQuery += "rentalCost between " + double.Parse(textBox3.Text) + " and " + double.Parse(textBox4.Text) + "";
+                }
+                else if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
+                {
+                    double counterOfMinHoures = 0;
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("שעה"))
+                    {
+                        counterOfMinHoures += double.Parse(nimTime.Text);
+                    }
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("יום"))
+                    {
+                        counterOfMinHoures += (double.Parse(nimTime.Text) * 24);
+                    }
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("חודש"))
+                    {
+                        counterOfMinHoures += ((double.Parse(nimTime.Text) * 24) * 30);
+                    }
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("שנה"))
+                    {
+                        counterOfMinHoures += (((double.Parse(nimTime.Text) * 24) * 30) * 365);
+                    }
+                    myQuery += "AND minimalRentTime>='" + counterOfMinHoures + "'";
+                }
                 if (type.Equals("Pets"))
                 {
                     if (animalType.SelectedIndex != -1)

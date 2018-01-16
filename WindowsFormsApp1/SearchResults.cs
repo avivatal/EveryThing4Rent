@@ -37,39 +37,14 @@ namespace WindowsFormsApp1
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // here you can have column reference by using e.ColumnIndex
-            //    DataGridViewImageCell cell = (DataGridViewImageCell)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-                if (e.ColumnIndex == 1)
-                {
-                con.Open();
-                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
-                OleDbCommand cmd = new OleDbCommand("SELECT Type FROM ProductTypes WHERE LessorID='" + row.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + row.Cells[2].FormattedValue.ToString() + "'", con);
-                OleDbDataReader reader = cmd.ExecuteReader();
-
-                if (reader.Read() && reader.GetValue(0) != DBNull.Value)
-                {
-                    string type = reader.GetValue(0).ToString();
-                    OleDbCommand cmd1 = new OleDbCommand("SELECT * FROM " + type + " WHERE lessorID='" + row.Cells[3].FormattedValue.ToString() + "' AND productID='" + row.Cells[2].FormattedValue.ToString() + "'", con);
-                    OleDbDataReader reader1 = cmd1.ExecuteReader();
-                    if (reader1.Read() && reader1.GetValue(0) != DBNull.Value)
-                    {
-                        ProductDetails moreDeatils = new ProductDetails(type,reader1.GetValue(0).ToString(), reader1.GetValue(1).ToString(), reader1.GetValue(2).ToString(), reader1.GetValue(4).ToString(), reader1.GetValue(6).ToString(), reader1.GetValue(11).ToString(), reader1.GetValue(9).ToString(), reader1.GetValue(3).ToString(), reader1.GetValue(5).ToString(), reader1.GetValue(7).ToString());
-                        moreDeatils.ShowDialog();
-                    }
-                }
-                con.Close();
-
-            }
-
-            // ... do something ...
+            
         }
         private void SearchResults_Load(object sender, EventArgs e)
         {
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
-            try//TODDDDDDDDDDDDDDDDDDDDDDDDDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            {
+            try
+                {
                 OleDbCommand show = new OleDbCommand(query, Settings.con);
                 Settings.con.Open();
                 show.ExecuteNonQuery();
@@ -82,7 +57,7 @@ namespace WindowsFormsApp1
                     error.Hide();
                     dataGridView1.DataSource = ds;
 
-                dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(dataGridView1_CellContentClick);
+                dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(dataGridView1_CellContentClick_1);
                 DataGridViewCheckBoxColumn selectcolunm = new DataGridViewCheckBoxColumn();
                 selectcolunm.Name = "Select Product";
 
@@ -139,7 +114,27 @@ namespace WindowsFormsApp1
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex == 1)
+            {
+                con.Open();
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                OleDbCommand cmd = new OleDbCommand("SELECT Type FROM ProductTypes WHERE LessorID='" + row.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + row.Cells[2].FormattedValue.ToString() + "'", con);
+                OleDbDataReader reader = cmd.ExecuteReader();
 
+                if (reader.Read() && reader.GetValue(0) != DBNull.Value)
+                {
+                    string type = reader.GetValue(0).ToString();
+                    OleDbCommand cmd1 = new OleDbCommand("SELECT * FROM " + type + " WHERE lessorID='" + row.Cells[3].FormattedValue.ToString() + "' AND productID='" + row.Cells[2].FormattedValue.ToString() + "'", con);
+                    OleDbDataReader reader1 = cmd1.ExecuteReader();
+                    if (reader1.Read() && reader1.GetValue(0) != DBNull.Value)
+                    {
+                        ProductDetails moreDeatils = new ProductDetails(type, reader1.GetValue(0).ToString(), reader1.GetValue(1).ToString(), reader1.GetValue(2).ToString(), reader1.GetValue(4).ToString(), reader1.GetValue(6).ToString(), reader1.GetValue(11).ToString(), reader1.GetValue(9).ToString(), reader1.GetValue(3).ToString(), reader1.GetValue(5).ToString(), reader1.GetValue(7).ToString());
+                        moreDeatils.ShowDialog();
+                    }
+                }
+                con.Close();
+
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
