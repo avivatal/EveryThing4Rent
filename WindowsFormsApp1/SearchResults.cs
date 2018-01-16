@@ -141,8 +141,8 @@ namespace WindowsFormsApp1
                     {
                         TradeIn tradein = new TradeIn(selectedRow);
                         tradein.ShowDialog();
-                   }
-                     else {
+                    }
+                    else {
                         MessageBox.Show("אינך יכול להחליף עם מוצר זה- מוצר זה בבעלותך");
                     }
                 }
@@ -159,30 +159,23 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            String owenerId = "";
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCheckBoxCell cell = row.Cells[0] as DataGridViewCheckBoxCell;
                 if (cell.Value != null && (bool)cell.Value)// cell.TrueValue)
                 {
-                    owenerId = row.Cells[3].FormattedValue.ToString();
                     selectedRow = row;
+
                     break;
                 }
             }
+           
             if (Settings.user != null)
             {
-                if (!Settings.user.getID().Equals(owenerId))
-                {
-                    RequestForRent requestForRent = new RequestForRent();
-                    requestForRent.setProductids(selectedRow);
-                    requestForRent.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("אינך יכול לשכור מוצר שבבעלותך");
-                }
+                RequestForRent requestForRent = new RequestForRent();
+                requestForRent.setProductids(selectedRow);
+                requestForRent.ShowDialog();
             }
             else
             {

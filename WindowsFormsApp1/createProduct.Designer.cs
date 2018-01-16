@@ -56,6 +56,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.realestateType = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
@@ -87,13 +88,16 @@
             this.label27 = new System.Windows.Forms.Label();
             this.isTraded = new System.Windows.Forms.CheckBox();
             this.isPackage = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -309,7 +313,7 @@
             "hybrid",
             "convertible",
             "motorcycle"});
-            this.carType.Location = new System.Drawing.Point(12, 44);
+            this.carType.Location = new System.Drawing.Point(12, 43);
             this.carType.Name = "carType";
             this.carType.Size = new System.Drawing.Size(82, 21);
             this.carType.TabIndex = 33;
@@ -324,6 +328,7 @@
             this.label14.Size = new System.Drawing.Size(111, 17);
             this.label14.TabIndex = 26;
             this.label14.Text = "פרטים נוספים-רכב";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
             // 
             // isAutomatic
             // 
@@ -413,6 +418,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Visible = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(60, 103);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(82, 23);
+            this.button1.TabIndex = 35;
+            this.button1.Text = "הוסף ציוד";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // realestateType
             // 
@@ -677,7 +692,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(32, 100);
+            this.button2.Location = new System.Drawing.Point(12, 100);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(82, 23);
             this.button2.TabIndex = 29;
@@ -774,15 +789,38 @@
             this.isPackage.UseVisualStyleBackColor = false;
             this.isPackage.CheckedChanged += new System.EventHandler(this.isPackage_CheckedChanged);
             // 
-            // button1
+            // groupBox6
             // 
-            this.button1.Location = new System.Drawing.Point(60, 103);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 23);
-            this.button1.TabIndex = 35;
-            this.button1.Text = "הוסף ציוד";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.groupBox6.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox6.Controls.Add(this.numericUpDown1);
+            this.groupBox6.Location = new System.Drawing.Point(103, 84);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(46, 39);
+            this.groupBox6.TabIndex = 34;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Enter += new System.EventHandler(this.groupBox6_Enter);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(12, 14);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(29, 20);
+            this.numericUpDown1.TabIndex = 35;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // createProduct
             // 
@@ -790,6 +828,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(389, 613);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button2);
@@ -828,6 +867,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -894,5 +935,7 @@
         private System.Windows.Forms.CheckBox isTraded;
         private System.Windows.Forms.CheckBox isPackage;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

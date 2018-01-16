@@ -17,6 +17,7 @@ namespace WindowsFormsApp1
         public updateProduct()
         {
             InitializeComponent();
+            groupBox6.Hide();
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -454,9 +455,15 @@ namespace WindowsFormsApp1
                 }
                 if (aproval.SelectedIndex != -1)
                 {
+                    string rating = "0";
+                    if (aproval.SelectedItem.Equals("שמרנית"))
+                    {
+                       
+                        rating = numericUpDown1.Value.ToString();
+                    }
                     OleDbCommand cmd1 = new OleDbCommand();
                     con.Open();
-                    cmd1.CommandText = "UPDATE " + type + " SET approvalApproach = '" + aproval.SelectedItem.ToString() + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.CommandText = "UPDATE " + type + " SET approvalApproach = '" + aproval.SelectedItem.ToString() +"' , rankCons = '" +rating+ "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
                     cmd1.Connection = con;
                     cmd1.ExecuteNonQuery();
                     con.Close();
@@ -522,6 +529,18 @@ namespace WindowsFormsApp1
         {
             AddEquipment add = new AddEquipment();
             add.ShowDialog();
+        }
+
+        private void aproval_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (aproval.SelectedItem.Equals("שמרנית"))
+            {
+                groupBox6.Show();
+            }
+            else
+            {
+                groupBox6.Hide();
+            }
         }
     }
 }
