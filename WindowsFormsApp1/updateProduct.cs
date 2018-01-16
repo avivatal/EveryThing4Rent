@@ -484,83 +484,100 @@ namespace WindowsFormsApp1
                             temp = "true";
                         else temp = "false";
 
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET canBeTraded = '" + temp + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET canBeTraded = '" + temp + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
+                {
+                    double counterOfMinHoures = 0;
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("שעה"))
                     {
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET minimalRentTime = '" + nimTime.Text + " " + nimTimeCheck.SelectedItem.ToString() + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
+                        counterOfMinHoures += double.Parse(nimTime.Text);
                     }
-                    if (aproval.SelectedIndex != -1)
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("יום"))
                     {
-                        string rating = "0";
-                        if (aproval.SelectedItem.Equals("שמרנית"))
-                        {
-
-                            rating = numericUpDown1.Value.ToString();
-                        }
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET approvalApproach = '" + aproval.SelectedItem.ToString() + "' , rankCons = '" + rating + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
+                        counterOfMinHoures += (double.Parse(nimTime.Text) * 24);
                     }
-                    if (cancel.Text != "")
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("חודש"))
                     {
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET cancelPolicy = '" + cancel.Text + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
+                        counterOfMinHoures += ((double.Parse(nimTime.Text) * 24) * 30);
                     }
-                    if (cost.Text != "")
+                    if (nimTimeCheck.SelectedItem.ToString().Equals("שנה"))
                     {
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET rentalCost = '" + cost.Text + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
+                        counterOfMinHoures += (((double.Parse(nimTime.Text) * 24) * 30) * 365);
                     }
-                    if (deposit.Text != "")
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET minimalRentTime = '" + counterOfMinHoures+ "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (aproval.SelectedIndex != -1)
+                {
+                    string rating = "0";
+                    if (aproval.SelectedItem.Equals("שמרנית"))
                     {
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET deposit = '" + deposit.Text + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
+                       
+                        rating = numericUpDown1.Value.ToString();
                     }
-                    if (pictureBox1.ImageLocation != null)
-                    {
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET image = '" + pictureBox1.ImageLocation + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    if (pictureBox1.ImageLocation != null)
-                    {
-                        OleDbCommand cmd1 = new OleDbCommand();
-                        con.Open();
-                        cmd1.CommandText = "UPDATE " + type + " SET image = '" + pictureBox1.ImageLocation + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
-                        cmd1.Connection = con;
-                        cmd1.ExecuteNonQuery();
-                        con.Close();
-                    }
-                    ///////////////////////is part of package//////is 
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET approvalApproach = '" + aproval.SelectedItem.ToString() +"' , rankCons = '" +rating+ "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (cancel.Text != "")
+                {
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET cancelPolicy = '" + cancel.Text + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (cost.Text != "")
+                {
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET rentalCost = '" + cost.Text + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (deposit.Text != "")
+                {
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET deposit = '" + deposit.Text + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (pictureBox1.ImageLocation != null)
+                {
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET image = '" + pictureBox1.ImageLocation + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                if (pictureBox1.ImageLocation != null)
+                {
+                    OleDbCommand cmd1 = new OleDbCommand();
+                    con.Open();
+                    cmd1.CommandText = "UPDATE " + type + " SET image = '" + pictureBox1.ImageLocation + "' WHERE lessorID = '" + Settings.user.getID() + "' AND productID='" + int.Parse(comboBox2.SelectedItem.ToString()) + "'";
+                    cmd1.Connection = con;
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+                ///////////////////////is part of package//////is 
 
                     MessageBox.Show("Success");
                     this.Close();
@@ -577,6 +594,12 @@ namespace WindowsFormsApp1
         private void label28_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AddEquipment add = new AddEquipment();
+            add.ShowDialog();
         }
 
         private void aproval_SelectedIndexChanged(object sender, EventArgs e)

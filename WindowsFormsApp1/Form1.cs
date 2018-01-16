@@ -86,20 +86,20 @@ namespace WindowsFormsApp1
                 OleDbCommand request = new OleDbCommand("SELECT * FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'", con);
                 request.ExecuteNonQuery();
 
-                ///checkedListBox1.Items.Add(read.GetValue(1));
-                OleDbCommand cmd1 = new OleDbCommand();
-                cmd1.CommandText = "SELECT COUNT(*) FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'";
-                cmd1.Connection = con;
-                cmd1.ExecuteNonQuery();
-                int total = (Int32)cmd1.ExecuteScalar();
-                OleDbDataReader reader1 = request.ExecuteReader();
-                while (reader1.HasRows && total > 0)
-                {
-                    total--;
-                    reader1.Read();
-                    groupBox3.Show();
-                    checkedListBox1.Items.Add(reader1.GetValue(3).ToString());
-                }
+            ///checkedListBox1.Items.Add(read.GetValue(1));
+            OleDbCommand cmd1 = new OleDbCommand();
+            cmd1.CommandText = "SELECT COUNT(*) FROM tradeRequest WHERE lessorID='" + Settings.user.getID() + "'";
+            cmd1.Connection = con;
+            cmd1.ExecuteNonQuery();
+            int total = (Int32)cmd1.ExecuteScalar();
+            OleDbDataReader reader1 = request.ExecuteReader();
+            while (reader1.HasRows && total > 0)
+            {
+                total--;
+                reader1.Read();
+                groupBox3.Show();
+                checkedListBox1.Items.Add(reader1.GetValue(2).ToString() + " "+reader1.GetValue(3).ToString()+" בקשה מ");
+            }
 
 
                 con.Close();
@@ -257,8 +257,30 @@ namespace WindowsFormsApp1
             }
             else if (nimTime.Text != "" && nimTimeCheck.SelectedIndex != -1)
             {
-                ///FUNCTION THAT CHECK TIMES
+                double counterOfMinHoures = 0;
+                if (nimTimeCheck.SelectedItem.ToString().Equals("שעה"))
+                {
+                    counterOfMinHoures += double.Parse(nimTime.Text);
+                }
+                if (nimTimeCheck.SelectedItem.ToString().Equals("יום"))
+                {
+                    counterOfMinHoures += (double.Parse(nimTime.Text) * 24);
+                }
+                if (nimTimeCheck.SelectedItem.ToString().Equals("חודש"))
+                {
+                    counterOfMinHoures += ((double.Parse(nimTime.Text) * 24) * 30);
+                }
+                if (nimTimeCheck.SelectedItem.ToString().Equals("שנה"))
+                {
+                    counterOfMinHoures += (((double.Parse(nimTime.Text) * 24) * 30) * 365);
+                }
+                myQuery += "AND minimalRentTime>='" + counterOfMinHoures + "'";
             }
+
+
+            //if(!(check1<check2))
+                ///FUNCTION THAT CHECK TIMES
+            //}
             else if(!((valid1&&(check1.Date>=DateTime.Now.Date))&& (valid2 && (check2 >= DateTime.Now.Date))&&(check1<=check2)))
             {
                 ///check today... cant change query beacuse times in calender
@@ -310,9 +332,17 @@ namespace WindowsFormsApp1
                         myQuery += "and manufacture=" + carManu.Text + "";
                     if (carYear.Text != "")
                         myQuery += "and yearOfManufacture='" + carYear.Text + "'";
-                    /*     if(isAutomatic.Checked)
-                             myQuery += "and isAutomatic='true'";
-                         else myQuery += "and isAutomatic='false'";*/
+                    if (isAutomatic.SelectedIndex != -1)
+                    {
+                        if (isAutomatic.SelectedItem.ToString().Equals("כן"))
+                        {
+                            myQuery += "and isAutomatic='true'";
+                        }
+                        else
+                        {
+                            myQuery += "and isAutomatic='false'";
+                        }
+                    }
 
                 }
                 else if (type.Equals("RealEstate"))

@@ -93,6 +93,7 @@
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -375,6 +376,7 @@
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.CausesValidation = false;
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.realestateType);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.textBox11);
@@ -382,7 +384,7 @@
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Location = new System.Drawing.Point(190, 490);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(208, 110);
+            this.groupBox2.Size = new System.Drawing.Size(208, 139);
             this.groupBox2.TabIndex = 63;
             this.groupBox2.TabStop = false;
             this.groupBox2.Visible = false;
@@ -960,5 +962,6 @@
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button button1;
     }
 }

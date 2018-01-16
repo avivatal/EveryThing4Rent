@@ -70,7 +70,6 @@ namespace WindowsFormsApp1
                 cmd2.ExecuteNonQuery();
                 OleDbDataReader reader2 = cmd2.ExecuteReader();
                 reader2.Read();
-               // con.Close();
                  
                 if(reader2.GetValue(0).Equals("כל הקודם זוכה"))
                 {
@@ -80,30 +79,9 @@ namespace WindowsFormsApp1
                 {
                     status = "pending";
                 }
-                else if (reader2.GetValue(0).Equals("שמרנית"))
+                else if (reader2.GetValue(0).Equals("השמרנית"))
                 {
-                        OleDbCommand cmd5 = new OleDbCommand("SELECT avgScore FROM RegisteredUser WHERE ID=@ID", con);
-                        cmd5.Parameters.AddWithValue("@ID", Settings.user.getID());
-                        
-                        cmd5.ExecuteNonQuery();
-                        OleDbDataReader reader5 = cmd5.ExecuteReader();
-                        reader5.Read();
-                        double avgscore = double.Parse(reader5.GetValue(0).ToString());
-
-                        OleDbCommand cmd6 = new OleDbCommand("SELECT rankCons FROM " + reader1.GetValue(0).ToString() + " WHERE LessorID='" + selectedProduct.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + productID + "'", con);
-                        cmd6.ExecuteNonQuery();
-                        OleDbDataReader reader6 = cmd6.ExecuteReader();
-                        reader6.Read();
-                        double rankCons = double.Parse(reader6.GetValue(0).ToString());
-
-                        if(avgscore >= rankCons)
-                        {
-                            status = "approved";
-                        }
-                        else
-                        {
-                            status = "denied";
-                        }
+                    status = "approved"; /////////צריך להיות מאושר ע"פ סף אמינות כלשהו
                 }
 
                 }
@@ -111,10 +89,10 @@ namespace WindowsFormsApp1
                 //add to DB
                 OleDbCommand cmd3 = new OleDbCommand();
                // con.Open();
-                cmd3.CommandText = "INSERT INTO RentalRequests ([LesseID],[ProductID],[StartDate],[EndDate],[Status],[LessorID])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+ "','"+ lessorID+"')";
+                cmd3.CommandText = "INSERT INTO RentalRequests ([LessorID],[ProductID],[StartDate],[EndDate],[Status])VALUES('" + Settings.user.getID() + "','" + productID + "','" + dateTimePicker1.Value.Date + "','" + dateTimePicker2.Value.Date+"','"+status+"')";
                 cmd3.Connection = con;
                 cmd3.ExecuteNonQuery();
-              //  con.Close();
+                //  con.Close();
 
                 //get lessor email
                 lessorID = selectedProduct.Cells[3].FormattedValue.ToString(); ///////check index

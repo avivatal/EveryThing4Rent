@@ -41,7 +41,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.car = new System.Windows.Forms.GroupBox();
             this.carType = new System.Windows.Forms.ComboBox();
-            this.isAutomatic = new System.Windows.Forms.CheckBox();
             this.carYear = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.carManu = new System.Windows.Forms.TextBox();
@@ -100,6 +99,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label26 = new System.Windows.Forms.Label();
+            this.isAutomatic = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.car.SuspendLayout();
             this.pets.SuspendLayout();
@@ -220,8 +221,9 @@
             // car
             // 
             this.car.BackColor = System.Drawing.Color.Transparent;
-            this.car.Controls.Add(this.carType);
+            this.car.Controls.Add(this.label29);
             this.car.Controls.Add(this.isAutomatic);
+            this.car.Controls.Add(this.carType);
             this.car.Controls.Add(this.carYear);
             this.car.Controls.Add(this.label17);
             this.car.Controls.Add(this.carManu);
@@ -231,7 +233,7 @@
             this.car.Controls.Add(this.label22);
             this.car.Controls.Add(this.label15);
             this.car.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.car.Location = new System.Drawing.Point(475, 256);
+            this.car.Location = new System.Drawing.Point(35, 19);
             this.car.Name = "car";
             this.car.Size = new System.Drawing.Size(445, 143);
             this.car.TabIndex = 39;
@@ -262,17 +264,6 @@
             this.carType.Size = new System.Drawing.Size(82, 26);
             this.carType.TabIndex = 42;
             this.carType.Text = "בחר";
-            // 
-            // isAutomatic
-            // 
-            this.isAutomatic.AutoSize = true;
-            this.isAutomatic.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.isAutomatic.Location = new System.Drawing.Point(352, 104);
-            this.isAutomatic.Name = "isAutomatic";
-            this.isAutomatic.Size = new System.Drawing.Size(71, 22);
-            this.isAutomatic.TabIndex = 41;
-            this.isAutomatic.Text = "אוטומט";
-            this.isAutomatic.UseVisualStyleBackColor = true;
             // 
             // carYear
             // 
@@ -899,9 +890,9 @@
             this.groupBox3.Controls.Add(this.checkedListBox1);
             this.groupBox3.Controls.Add(this.label26);
             this.groupBox3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.groupBox3.Location = new System.Drawing.Point(521, 203);
+            this.groupBox3.Location = new System.Drawing.Point(525, 222);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(191, 185);
+            this.groupBox3.Size = new System.Drawing.Size(178, 167);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Visible = false;
@@ -909,7 +900,7 @@
             // checkedListBox1
             // 
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(57, 49);
+            this.checkedListBox1.Location = new System.Drawing.Point(26, 55);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(120, 88);
             this.checkedListBox1.TabIndex = 8;
@@ -917,11 +908,35 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(18, 17);
+            this.label26.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label26.Location = new System.Drawing.Point(11, 22);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(163, 19);
+            this.label26.Size = new System.Drawing.Size(153, 18);
             this.label26.TabIndex = 7;
             this.label26.Text = "בקשות חדשות להחלפה";
+            // 
+            // isAutomatic
+            // 
+            this.isAutomatic.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.isAutomatic.FormattingEnabled = true;
+            this.isAutomatic.Items.AddRange(new object[] {
+            "כן",
+            "לא"});
+            this.isAutomatic.Location = new System.Drawing.Point(303, 104);
+            this.isAutomatic.Name = "isAutomatic";
+            this.isAutomatic.Size = new System.Drawing.Size(58, 26);
+            this.isAutomatic.TabIndex = 43;
+            this.isAutomatic.Text = "בחר";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label29.Location = new System.Drawing.Point(385, 110);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(52, 18);
+            this.label29.TabIndex = 44;
+            this.label29.Text = "אוטומט";
             // 
             // Form1
             // 
@@ -1011,7 +1026,6 @@
         private System.Windows.Forms.GroupBox car;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox carType;
-        private System.Windows.Forms.CheckBox isAutomatic;
         private System.Windows.Forms.TextBox carYear;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox carManu;
@@ -1038,6 +1052,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.ComboBox isAutomatic;
     }
 }
 
