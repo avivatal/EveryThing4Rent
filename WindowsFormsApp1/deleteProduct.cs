@@ -154,15 +154,43 @@ namespace WindowsFormsApp1
                     break;
                 }
             }
+
+            OleDbCommand cmd2 = new OleDbCommand();
+            con.Open();
+            cmd2.CommandText = "SELECT * FROM "+type+" WHERE productID='"+ comboBox2.SelectedItem.ToString()+ "' AND lessorID='" + Settings.user.getID() + "'";
+            cmd2.Parameters.Add(new OleDbParameter { Value = comboBox2.SelectedItem });
+            cmd2.Connection = con;
+           cmd2.ExecuteNonQuery();
+
+            OleDbDataReader READER = cmd2.ExecuteReader();
+            if(READER.Read()&& READER.GetValue(0) != DBNull.Value)
+            {
+                OleDbCommand cmd3 = new OleDbCommand();
+                cmd3.CommandText = "INSERT INTO DeletedProduct ([productID],[lessorID],[rentalCost],[minimalRentTime],[approvalApproach],[isOnlyPartOfPackage],[cancelPolicy],[image],[deposit],[avgScore],[viewCount],[canBeTraded],[Type])VALUES('" + READER.GetValue(0).ToString() + "','" + READER.GetValue(1).ToString()+ "'," + double.Parse(READER.GetValue(2).ToString()) + ",'" + READER.GetValue(3).ToString() + "','" + READER.GetValue(4).ToString() + "','" + READER.GetValue(5).ToString() + "','" + READER.GetValue(6).ToString() + "','" + READER.GetValue(7).ToString() + "'," + double.Parse(READER.GetValue(8).ToString()) + "," + double.Parse(READER.GetValue(9).ToString()) + "," + double.Parse(READER.GetValue(10).ToString()) + ",'" + READER.GetValue(11).ToString() + "','" + type + "')";
+                cmd3.Connection = con;
+                cmd3.ExecuteNonQuery();
+            }
+            con.Close();
+
             
             //delete from DB
             OleDbCommand cmd = new OleDbCommand();
             con.Open();
-            cmd.CommandText = "DELETE FROM "+ type+" WHERE productID= ? lessorID='"+Settings.user.getID()+"'";
-            cmd.Parameters.Add(new OleDbParameter { Value = comboBox2.SelectedItem });
+            cmd.CommandText = "DELETE FROM "+ type+ " WHERE productID='" + comboBox2.SelectedItem.ToString() + "' AND lessorID='" + Settings.user.getID()+"'";
             cmd.Connection = con;
             cmd.ExecuteNonQuery();
             con.Close();
+
+
+            OleDbCommand cmd1 = new OleDbCommand();
+            con.Open();
+            cmd1.CommandText = "DELETE FROM ProductTypes WHERE productID='" + comboBox2.SelectedItem.ToString() + "' AND LessorID='" + Settings.user.getID() + "'";
+            cmd1.Connection = con;
+            cmd1.ExecuteNonQuery();
+            con.Close();
+
+
+
             DialogResult msg = MessageBox.Show("המוצר נמחק בהצלחה", "אישור מחיקה", MessageBoxButtons.OK);
 
         }

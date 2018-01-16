@@ -15,6 +15,7 @@ namespace WindowsFormsApp1
     {
         string query;
         DataGridViewRow selectedRow;
+        OleDbConnection con = Settings.con;
         public void setQuery(string q)
         {
             query = q;
@@ -41,9 +42,26 @@ namespace WindowsFormsApp1
 
                 if (e.ColumnIndex == 1)
                 {
-                    //Write code
+                con.Open();
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                OleDbCommand cmd = new OleDbCommand("SELECT Type FROM ProductTypes WHERE LessorID='" + row.Cells[3].FormattedValue.ToString() + "' AND ProductID='" + row.Cells[2].FormattedValue.ToString() + "'", con);
+                OleDbDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read() && reader.GetValue(0) != DBNull.Value)
+                {
+                    string type = reader.GetValue(0).ToString();
+                    OleDbCommand cmd1 = new OleDbCommand("SELECT * FROM " + type + " WHERE lessorID='" + row.Cells[3].FormattedValue.ToString() + "' AND productID='" + row.Cells[2].FormattedValue.ToString() + "'", con);
+                    OleDbDataReader reader1 = cmd1.ExecuteReader();
+                    if (reader1.Read() && reader1.GetValue(0) != DBNull.Value)
+                    {
+                        ProductDetails moreDeatils = new ProductDetails(type,reader1.GetValue(0).ToString(), reader1.GetValue(1).ToString(), reader1.GetValue(2).ToString(), reader1.GetValue(4).ToString(), reader1.GetValue(6).ToString(), reader1.GetValue(11).ToString(), reader1.GetValue(9).ToString(), reader1.GetValue(3).ToString(), reader1.GetValue(5).ToString(), reader1.GetValue(7).ToString());
+                        moreDeatils.ShowDialog();
+                    }
                 }
-            
+                con.Close();
+
+            }
+
             // ... do something ...
         }
         private void SearchResults_Load(object sender, EventArgs e)
@@ -63,7 +81,7 @@ namespace WindowsFormsApp1
                 error.Hide();
                 dataGridView1.DataSource = ds;
 
-                
+                dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(dataGridView1_CellContentClick);
                 DataGridViewCheckBoxColumn selectcolunm = new DataGridViewCheckBoxColumn();
                 selectcolunm.Name = "Select Product";
 
@@ -141,8 +159,8 @@ namespace WindowsFormsApp1
                     {
                         TradeIn tradein = new TradeIn(selectedRow);
                         tradein.ShowDialog();
-                    }
-                    else {
+                   }
+                     else {
                         MessageBox.Show("אינך יכול להחליף עם מוצר זה- מוצר זה בבעלותך");
                     }
                 }
@@ -159,23 +177,30 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            String owenerId = "";
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 DataGridViewCheckBoxCell cell = row.Cells[0] as DataGridViewCheckBoxCell;
                 if (cell.Value != null && (bool)cell.Value)// cell.TrueValue)
                 {
+                    owenerId = row.Cells[3].FormattedValue.ToString();
                     selectedRow = row;
-
                     break;
                 }
             }
-           
             if (Settings.user != null)
             {
-                RequestForRent requestForRent = new RequestForRent();
-                requestForRent.setProductids(selectedRow);
-                requestForRent.ShowDialog();
+                if (!Settings.user.getID().Equals(owenerId))
+                {
+                    RequestForRent requestForRent = new RequestForRent();
+                    requestForRent.setProductids(selectedRow);
+                    requestForRent.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("אינך יכול לשכור מוצר שבבעלותך");
+                }
             }
             else
             {

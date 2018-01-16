@@ -330,7 +330,7 @@ namespace WindowsFormsApp1
                     r.setQuery(myQuery);
                     r.ShowDialog();
                 }
-            //}
+            }
         }
     }
 }

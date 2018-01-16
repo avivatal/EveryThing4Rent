@@ -301,7 +301,7 @@ namespace WindowsFormsApp1
                   
                         OleDbCommand cmd8 = new OleDbCommand();
                         con.Open();
-                        cmd8.CommandText = "INSERT INTO ProductTypes ([LessorID],[ProductID],[Type])VALUES('" + Settings.user.getID() + "','" + counter + "','" + tableName + "')";
+                        cmd8.CommandText = "INSERT INTO ProductTypes ([LessorID],[ProductID],[Type])VALUES('" + Settings.user.getID() + "','" + (counter-1) + "','" + tableName + "')";
                         cmd8.Connection = con;
                         cmd8.ExecuteNonQuery();
                         con.Close();
